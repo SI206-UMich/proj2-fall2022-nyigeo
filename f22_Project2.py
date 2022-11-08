@@ -1,3 +1,8 @@
+# Your name: Nyia George 
+# Your student id: 11784982
+# Your email: Nyiag@umich.edu
+# List who you have worked with on this project: Isabel Lopez, Tamariah Davis, Nylah Omar 
+
 from xml.sax import parseString
 from bs4 import BeautifulSoup
 import re
@@ -25,6 +30,31 @@ def get_listings_from_search_results(html_file):
         ('Loft in Mission District', 210, '1944564'),  # example
     ]
     """
+    base_path = os.path.abspath(os.path.dirname(__file__))
+    full_path = os.path.join(base_path, html_file)
+    with open(full_path, 'r') as f:
+        content = f.read()
+        soup = BeautifulSoup(content, 'html.parser')
+        title = soup.find_all('div', class_ = 't1jojoys dir dir-ltr')
+        cost = soup.find_all('span', class_ = '_tyxjp1')
+        ids = soup.find_all('div', itemtype = "http://schema.org/ListItem")
+        listofid = []
+        for id in ids: 
+            url = id.find('meta', itemprop = "url")["content"]
+            url = url.split('?')[0]
+            id = url.split('/')[-1]
+            listofid.append(id)
+        titlelist = []
+        for t in title: 
+            titlelist.append(t.text.strip())
+        costlist = []
+        for c in cost:
+            costlist.append(c.text.strip()[1:])
+        finallist = []
+        for loop in range(len(titlelist)):
+            finallist.append((titlelist[loop],int(costlist[loop]), listofid[loop]))
+        print(finallist)
+        return(finallist)
     pass
 
 
