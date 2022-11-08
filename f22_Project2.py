@@ -82,6 +82,25 @@ def get_listing_information(listing_id):
         number of bedrooms
     )
     """
+    var1 = "listings_"
+    var2 = listing_id
+    finalvar = var1 + var2
+    base_path = os.path.abspath(os.path.dirname(__file__))
+    full_path = os.path.join(base_path, finalvar)
+    with open(full_path, 'r') as f:
+        content = f.read()
+        soup = BeautifulSoup(content, 'html.parser')
+        policynumber = soup.find_all('span', class_ = "ll4r2nl dor dir-ltr")
+        strlistp = ['Pending', 'pending', 'Pending Application', 'City registration']
+        strliste = ['License not needed per OSTR', 'Exempt', 'exempt']
+        if policynumber in strlistp:
+            policynumber = "Pending"
+        elif policynumber in strliste: 
+            policynumber = 'Exempt'
+        else: 
+            policynumber = policynumber
+    print(finalvar)
+
     pass
 
 
