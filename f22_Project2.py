@@ -1,7 +1,7 @@
 # Your name: Nyia George 
 # Your student id: 11784982
 # Your email: Nyiag@umich.edu
-# List who you have worked with on this project: Isabel Lopez, Tamariah Davis, Nylah Omar 
+# List who you have worked with on this project: Isabel Lopez, Tamariah Davis, Nylah Omar, Caira B. 
 
 from xml.sax import parseString
 from bs4 import BeautifulSoup
@@ -34,7 +34,7 @@ def get_listings_from_search_results(html_file):
     full_path = os.path.join(base_path, html_file)
     with open(full_path, 'r') as f:
         content = f.read()
-        soup = BeautifulSoup(content, 'html.parser')
+        soup = BeautifulSoup(content,'html.parser')
         title = soup.find_all('div', class_ = 't1jojoys dir dir-ltr')
         cost = soup.find_all('span', class_ = '_tyxjp1')
         ids = soup.find_all('div', itemtype = "http://schema.org/ListItem")
@@ -82,24 +82,61 @@ def get_listing_information(listing_id):
         number of bedrooms
     )
     """
-    var1 = "listings_"
-    var2 = listing_id
-    finalvar = var1 + var2
-    base_path = os.path.abspath(os.path.dirname(__file__))
-    full_path = os.path.join(base_path, finalvar)
-    with open(full_path, 'r') as f:
-        content = f.read()
-        soup = BeautifulSoup(content, 'html.parser')
-        policynumber = soup.find_all('span', class_ = "ll4r2nl dor dir-ltr")
-        strlistp = ['Pending', 'pending', 'Pending Application', 'City registration']
-        strliste = ['License not needed per OSTR', 'Exempt', 'exempt']
-        if policynumber in strlistp:
-            policynumber = "Pending"
-        elif policynumber in strliste: 
-            policynumber = 'Exempt'
-        else: 
-            policynumber = policynumber
-    print(finalvar)
+    #var1 = "listings_"
+    #var2 = listing_id
+    #finalvar = var1 + var2
+    #base_path = os.path.abspath(os.path.dirname(__file__)
+    #full_path = os.path.join(source_dir, f"html_files/listing_{listing_id}.html"
+    #content = f.read()
+   # f.close()
+    #with open(full_path, 'r') as f:
+        #content = f.read()
+    #source_dir = os.path.dirname(__file__)
+    #full_path = os.path.join(source_dir, f"html_files/listing_{listing_id}.html)")
+    #f = open(full_path, 'r')
+    #content = f.read()
+    #f.close()
+    files = "html_files/listing_"+ listing_id + ".html"
+    f_hand = open(files, "r")
+    files_hand = f_hand.read()
+    soup = BeautifulSoup(files_hand, 'html.parser')
+    f_hand.close()
+    
+
+    policynumber = soup.find_all('span', class_ = "ll4r2nl dor dir-ltr")
+    strlistp = ['Pending', 'pending', 'Pending Application', 'City registration']
+    strliste = ['License not needed per OSTR', 'Exempt', 'exempt']
+    if policynumber in strlistp:
+        policynumber = "Pending"
+    elif policynumber in strliste: 
+        policynumber = "Exempt"
+    else: 
+        policynumber = policynumber
+    return policynumber
+
+    placetype = soup.find_all('h2', class_ = '_14i3z6h')
+    strlista = ['Private Room', 'Shared Room']
+    strlistb = ['Private', 'Shared']
+    if placetype in strlista:
+        placetype = 'Private'
+    if placetype in strlistb:
+        placetype = 'Shared'
+    else: 
+        placetype = 'Entire Room'
+    
+    #print(placetype[0])
+
+    bedroomnum = soup.find_all('span', class_ = "ll4r2nl dor dir-ltr")
+    strlistc = []
+    strlistd = []
+    if bedroomnum in strlistc:
+        bedroomnum = ''
+    if bedroomnum in strlistd:
+        bedroomnum = ''
+    else: 
+        bedroomnum = ''
+
+   
 
     pass
 
@@ -118,6 +155,8 @@ def get_detailed_listing_database(html_file):
         ...
     ]
     """
+    
+
     pass
 
 
