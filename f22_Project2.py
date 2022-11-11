@@ -233,7 +233,7 @@ def extra_credit(listing_id):
     """
 
     filename = ("html_files/listing_" + listing_id + "_reviews.html")
-    with open(filename, 'r') as f: 
+    with open(filename,'r') as f: 
         content = f.read()
         soup = BeautifulSoup(content, 'html.parser')
 
